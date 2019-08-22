@@ -12,22 +12,31 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        
-        rb.AddForce(new Vector3(moveHorizontal, 0.0f, moveVertical) * speed);
-        if (Input.GetKeyDown("a"))
+        if (Input.GetKey(KeyCode.RightArrow)||(Input.GetKey("d")))
         {
-            rb.AddForce(new Vector3(moveHorizontal, 0.0f, moveVertical) * speed);
+            rb.velocity = transform.right * speed;
         }
-        if (Input.GetKeyDown("d"))
+        else if (Input.GetKey(KeyCode.LeftArrow)||(Input.GetKey("a")))
         {
-            rb.AddForce(new Vector3(moveVertical, 0.0f, moveVertical) * speed);
+            rb.velocity = -transform.right * speed;
+        }
+        else if (Input.GetKey(KeyCode.UpArrow)||(Input.GetKey("w")))
+        {
+            rb.velocity = new Vector3(0, 0, 1) * speed;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow)||(Input.GetKey("s")))
+        {
+            rb.velocity = new Vector3(0, 0, -1) * speed;
+        }
+        else
+        {
+            rb.velocity = new Vector3(0, 0, 0);
         }
     }
 }
